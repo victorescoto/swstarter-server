@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Exceptions\SWSerializerNotFoundException;
+use App\Serializers\PeopleSerializer;
 use App\Serializers\SWSerializerInterface;
 use Illuminate\Support\ServiceProvider;
 
@@ -19,6 +20,7 @@ class SWSerializerProvider extends ServiceProvider
             $resource = $this->app->make('router')->input('resource');
 
             return match ($resource) {
+                'people' => new PeopleSerializer,
                 default => throw new SWSerializerNotFoundException($resource),
             };
         });
