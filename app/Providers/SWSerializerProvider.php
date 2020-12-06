@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Exceptions\SWSerializerNotFoundException;
+use App\Serializers\FilmsSerializer;
 use App\Serializers\PeopleSerializer;
 use App\Serializers\SWSerializerInterface;
 use Illuminate\Support\ServiceProvider;
@@ -21,6 +22,7 @@ class SWSerializerProvider extends ServiceProvider
 
             return match ($resource) {
                 'people' => new PeopleSerializer,
+                'films' => new FilmsSerializer,
                 default => throw new SWSerializerNotFoundException($resource),
             };
         });
