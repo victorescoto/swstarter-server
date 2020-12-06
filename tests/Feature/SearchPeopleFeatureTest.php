@@ -4,10 +4,7 @@ namespace Tests\Feature;
 
 use App\Services\SWService;
 use Exception;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
-use Mockery\Expectation;
 
 class SearchPeopleFeatureTest extends TestCase
 {
