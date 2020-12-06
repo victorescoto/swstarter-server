@@ -20,5 +20,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('{resource}/search/{search}', Search::class)
-    ->where('resource', 'people')
+    ->where('resource', 'people|films')
     ->whereAlphaNumeric('search');
