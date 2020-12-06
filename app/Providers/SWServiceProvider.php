@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use App\Service\SWService;
-use App\Service\SWServiceInterface;
+use App\Services\SWService;
+use App\Services\SWServiceInterface;
 use Illuminate\Support\ServiceProvider;
 
 class SWServiceProvider extends ServiceProvider
