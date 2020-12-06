@@ -2,12 +2,12 @@
 
 namespace Tests\Unit\SWService;
 
-use App\Service\SWService;
+use App\Services\SWService;
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
 
-class SearchMovieTest extends TestCase
+class SearchFilmTest extends TestCase
 {
     private SWService $service;
 
@@ -47,10 +47,10 @@ class SearchMovieTest extends TestCase
      */
     public function testSearchMovieShouldReturnSuccessfully(): void
     {
-        $response = $this->service->searchMovie('foo');
+        $response = $this->service->search('films', 'foo');
 
         Http::assertSent(function (Request $request) {
-            return $request->url() === 'https://swapi.dev/api/films/?search=foo';
+            return $request->url() === 'http://swapi.dev/api/films/?search=foo';
         });
 
         $this->assertIsArray($response);

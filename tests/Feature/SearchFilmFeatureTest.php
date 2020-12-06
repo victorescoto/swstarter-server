@@ -6,9 +6,9 @@ use App\Services\SWService;
 use Exception;
 use Tests\TestCase;
 
-class SearchPeopleFeatureTest extends TestCase
+class SearchFilmFeatureTest extends TestCase
 {
-    protected $baseURL = '/api/people/search';
+    protected $baseURL = '/api/films/search';
 
     /**
      * Tests the endpoint URL
@@ -17,7 +17,7 @@ class SearchPeopleFeatureTest extends TestCase
      */
     public function testEndpointUrl()
     {
-        $response = $this->get("{$this->baseURL}/yoda");
+        $response = $this->get("{$this->baseURL}/hope");
         $response->assertOk();
         $this->assertNotEmpty($response['results']);
     }
@@ -58,7 +58,7 @@ class SearchPeopleFeatureTest extends TestCase
                 ->andThrow(new Exception);
         });
 
-        $response = $this->get("{$this->baseURL}/R2D2");
+        $response = $this->get("{$this->baseURL}/sith");
         $response
             ->assertStatus(500)
             ->assertJson(['error' => 'Something went wrong']);
