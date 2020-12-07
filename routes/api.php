@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\StarWars\Search;
+use App\Http\Controllers\Statistics;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,3 +24,5 @@ Route::middleware('response.performance')
     ->get('{resource}/search/{search}', Search::class)
     ->where('resource', 'people|films')
     ->whereAlphaNumeric('search');
+
+Route::get('statistics', Statistics::class);
