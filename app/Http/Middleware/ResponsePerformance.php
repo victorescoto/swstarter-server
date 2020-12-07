@@ -31,7 +31,6 @@ class ResponsePerformance
             'date' => now(),
             'executionTime' => microtime(true) - LARAVEL_START,
             'path' => $request->path(),
-            'resultsFound' => $responseData->count ?? 0,
             'resultsReturned' => count($responseData->results ?? []),
             'isSuccessful' => $response->isSuccessful(),
             'status' => $response->status(),

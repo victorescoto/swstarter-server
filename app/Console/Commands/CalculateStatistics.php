@@ -43,7 +43,7 @@ class CalculateStatistics extends Command
         $requestKeys = $redis->keys('request:*');
 
         if (count($requestKeys) < 5) {
-            $this->info('Not enough requests to calculate statistics');
+            $this->info('Insufficient requests to calculate statistics. At least 5 are required');
             return 0;
         }
 
@@ -63,7 +63,7 @@ class CalculateStatistics extends Command
         $executionTimes = data_get($requests, '*.executionTime');
         $dates = data_get($requests, '*.date');
 
-        $statistics = [
+        $results = [
             'searches' => data_get($requests, '*.path'),
             'fasterRequest' => min($executionTimes),
             'slowestRequest' => max($executionTimes),
@@ -74,11 +74,12 @@ class CalculateStatistics extends Command
             ],
             'totalRequests' => count($requests),
             'successes' => count(array_filter(data_get($requests, '*.isSuccessful'))),
-            'resultsFound' => array_sum(data_get($requests, '*.resultsFound')),
             'resultsReturned' => array_sum(data_get($requests, '*.resultsReturned')),
         ];
 
         $this->info('Saving the results');
+        $statistics = json_decode($redis->get('statistics')) ?? [];
+        array_push($statistics, $results);
         $redis->set('statistics', json_encode($statistics));
 
         $redis->del($requestKeys);
