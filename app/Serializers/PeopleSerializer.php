@@ -3,30 +3,24 @@ namespace App\Serializers;
 
 use Illuminate\Support\Arr;
 
-class PeopleSerializer extends AbstractSWSerializer implements SWSerializerInterface
+class PeopleSerializer extends AbstractSWSerializer
 {
-    public function serialize(array $people): array
+    /**
+     * @param array $person
+     * @return array
+     */
+    public function serializeItem(array $person): array
     {
-        if ($people['next']) {
-            $people['next'] = $this->replaceBaseURL($people['next']);
-        }
+        $person = Arr::prepend($person, $this->getResourceId($person), 'id');
 
-        if ($people['previous']) {
-            $people['previous'] = $this->replaceBaseURL($people['previous']);
-        }
+        $person['homeworld'] = $this->replaceBaseURL($person['homeworld']);
+        $person['url'] = $this->replaceBaseURL($person['url']);
 
-        foreach ($people['results'] as &$person) {
-            $person = Arr::prepend($person, $this->getResourceId($person), 'id');
+        $person['films'] = array_map([$this, 'replaceBaseURL'], $person['films']);
+        $person['species'] = array_map([$this, 'replaceBaseURL'], $person['species']);
+        $person['vehicles'] = array_map([$this, 'replaceBaseURL'], $person['vehicles']);
+        $person['starships'] = array_map([$this, 'replaceBaseURL'], $person['starships']);
 
-            $person['homeworld'] = $this->replaceBaseURL($person['homeworld']);
-            $person['url'] = $this->replaceBaseURL($person['url']);
-
-            $person['films'] = array_map([$this, 'replaceBaseURL'], $person['films']);
-            $person['species'] = array_map([$this, 'replaceBaseURL'], $person['species']);
-            $person['vehicles'] = array_map([$this, 'replaceBaseURL'], $person['vehicles']);
-            $person['starships'] = array_map([$this, 'replaceBaseURL'], $person['starships']);
-        }
-
-        return $people;
+        return $person;
     }
 }

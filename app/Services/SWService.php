@@ -23,4 +23,16 @@ class SWService implements SWServiceInterface
 
         return $response->json();
     }
+
+    /**
+     * @param string $resource
+     * @param string $text
+     */
+    public function getResource(string $resource, int $id): ?array
+    {
+        $response = Http::get("{$this->baseURL}/{$resource}/{$id}");
+        $response->throw();
+
+        return $response->json();
+    }
 }
