@@ -19,6 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('{resource}/search/{search}', Search::class)
+Route::middleware('response.performance')
+    ->get('{resource}/search/{search}', Search::class)
     ->where('resource', 'people|films')
     ->whereAlphaNumeric('search');
