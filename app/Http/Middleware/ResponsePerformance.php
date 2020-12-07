@@ -27,7 +27,7 @@ class ResponsePerformance
     {
         $responseData = $response->getData();
 
-        Redis::set('request::' . Uuid::uuid(), json_encode([
+        Redis::set('request:' . Uuid::uuid(), json_encode([
             'date' => now(),
             'executionTime' => microtime(true) - LARAVEL_START,
             'path' => $request->path(),
